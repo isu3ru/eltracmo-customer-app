@@ -1,6 +1,8 @@
 import 'package:eltracmo_customers/common/app_theme.dart';
 import 'package:eltracmo_customers/pages/auth/login.dart';
+import 'package:eltracmo_customers/pages/common/dialogs.dart';
 import 'package:eltracmo_customers/pages/common/loading_screen.dart';
+import 'package:eltracmo_customers/pages/customer/profile_page.dart';
 import 'package:eltracmo_customers/widgets/grid_button.dart';
 import 'package:flutter/material.dart';
 
@@ -18,48 +20,19 @@ class _DashboardState extends State<Dashboard> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Confirm Logout',
-            style: TextStyle(
-                fontSize: 21.0,
-                color: AppTheme.primaryColor,
-                fontWeight: FontWeight.bold),
-          ),
-          content: const SizedBox(
-            width: 300.0,
-            child: Text(
-                'Are you sure you want to log out of the app? You\'ll need to log in again.'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Cancel',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
+        return Dialogs.getConfirmDialog(
+          context,
+          'Confirm Logout',
+          'Are you sure you want to log out of the app? You\'ll need to log in again.',
+          'Log Out',
+          () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                  (route) => false,
-                );
-              },
-              child: const Text(
-                'Logout',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-            ),
-          ],
+              (route) => false,
+            );
+          },
         );
       },
     );
@@ -112,7 +85,16 @@ class _DashboardState extends State<Dashboard> {
                           GridButton(
                             image: 'assets/icons/user-profile.png',
                             text: 'Profile',
-                            onTap: () {},
+                            onTap: () {
+                              // go to profile page
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const ProfilePage();
+                                  },
+                                ),
+                              );
+                            },
                           ),
                           GridButton(
                             image: 'assets/icons/car.png',
