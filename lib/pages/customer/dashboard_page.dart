@@ -3,6 +3,7 @@ import 'package:eltracmo_customers/pages/auth/login.dart';
 import 'package:eltracmo_customers/pages/common/dialogs.dart';
 import 'package:eltracmo_customers/pages/common/loading_screen.dart';
 import 'package:eltracmo_customers/pages/customer/profile_page.dart';
+import 'package:eltracmo_customers/pages/vehicles/vehicles_home_page.dart';
 import 'package:eltracmo_customers/widgets/grid_button.dart';
 import 'package:flutter/material.dart';
 
@@ -99,7 +100,16 @@ class _DashboardState extends State<Dashboard> {
                           GridButton(
                             image: 'assets/icons/car.png',
                             text: 'Vehicles',
-                            onTap: () {},
+                            onTap: () {
+                              // go to vehicles home page
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const VehiclesHomePage();
+                                  },
+                                ),
+                              );
+                            },
                           ),
                           GridButton(
                             image: 'assets/icons/appointment.png',
