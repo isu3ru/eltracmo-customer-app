@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:eltracmo_customers/models/user.dart';
 import 'package:eltracmo_customers/services/common/api_service.dart';
 import 'package:eltracmo_customers/services/common/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,5 +43,21 @@ class CustomerService {
     }
 
     return false;
+  }
+
+  static Future<User?> getLoggedInCustomerUser() async {
+    // get token
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    headers.addAll({'Authorization': 'Bearer $token'});
+
+    var data = await ApiService.getRequest(profileGetRoute, headers: headers);
+
+    if (data!.isNotEmpty) {
+      return User.fromJson(data);
+    }
+
+    return null;
   }
 }

@@ -3,13 +3,13 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
-class RoundedCornerDatePicker extends StatelessWidget {
+class RoundedCornerTimePicker extends StatelessWidget {
   final String name;
   final String errorText;
-  final String? date;
+  final String? time;
 
-  const RoundedCornerDatePicker(
-      {Key? key, required this.name, required this.errorText, this.date})
+  const RoundedCornerTimePicker(
+      {Key? key, required this.name, required this.errorText, this.time})
       : super(key: key);
 
   @override
@@ -33,24 +33,24 @@ class RoundedCornerDatePicker extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 hintText: 'Please Select',
               ),
-              inputType: InputType.date,
-              format: DateFormat("yyyy-MM-dd"),
+              inputType: InputType.time,
+              format: DateFormat("hh:mm:ss a"),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(errorText: errorText),
               ]),
-              initialDate: date == null
+              initialDate: (time == null)
                   ? null
-                  : (date! == 'null' || date!.isEmpty
+                  : (time! == 'null' || time!.isEmpty
                       ? null
-                      : DateTime.parse(date!)),
-              initialValue: date == null
+                      : DateTime.parse(time!)),
+              initialValue: (time == null)
                   ? null
-                  : (date! == 'null' || date!.isEmpty
+                  : (time! == 'null' || time!.isEmpty
                       ? null
-                      : DateTime.parse(date!)),
+                      : DateTime.parse(time!)),
             ),
           ),
-          const Icon(Icons.calendar_month_sharp),
+          const Icon(Icons.access_time),
         ],
       ),
     );

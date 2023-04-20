@@ -1,6 +1,6 @@
-import 'package:eltracmo_customers/pages/auth/login.dart';
-import 'package:eltracmo_customers/pages/common/loading_screen.dart';
+import 'package:eltracmo_customers/pages/auth/login_page.dart';
 import 'package:eltracmo_customers/pages/customer/dashboard_page.dart';
+import 'package:eltracmo_customers/pages/common/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,28 +15,35 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
+    checkAuth();
   }
 
   Future<void> checkAuth() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences.getInstance().then((prefs) {
+      if (!mounted) return;
 
-    if (!mounted) return;
-
-    if (prefs.getString("token") == null) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {
-      // go to dashboard
-      Navigator.pushAndRemoveUntil(
+      if (prefs.getString("token") == null) {
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Dashboard()),
-          (route) => false);
-    }
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ),
+        );
+      } else {
+        // go to dashboard
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Dashboard(),
+          ),
+          (route) => false,
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return const LoadingScreen();
   }
 }

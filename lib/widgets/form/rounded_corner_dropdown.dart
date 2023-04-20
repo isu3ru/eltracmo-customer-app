@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class RoundedCornerDropdown extends StatelessWidget {
+class RoundedCornerDropdown<T> extends StatelessWidget {
   final String name;
   final String errorText;
-  final List<DropdownMenuItem<String>> items;
-  final String? initialValue;
+  final List<DropdownMenuItem<T>> items;
+  final T? initialValue;
+  final Function(T?)? onChanged;
 
   const RoundedCornerDropdown(
       {Key? key,
       required this.name,
       required this.errorText,
       required this.items,
-      this.initialValue})
+      this.initialValue,
+      this.onChanged})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('initial value is');
-    print(initialValue);
-    return FormBuilderDropdown<String>(
+    return FormBuilderDropdown<T>(
       name: name,
       decoration: const InputDecoration(
         contentPadding: EdgeInsets.symmetric(
@@ -38,7 +38,12 @@ class RoundedCornerDropdown extends StatelessWidget {
         FormBuilderValidators.required(errorText: errorText),
       ]),
       items: items,
-      initialValue: initialValue == 'null' ? '' : initialValue,
+      initialValue: initialValue,
+      onChanged: (value) {
+        if (onChanged != null) {
+          onChanged!(value);
+        }
+      },
     );
   }
 }
