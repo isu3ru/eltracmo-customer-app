@@ -1,3 +1,4 @@
+import 'package:eltracmo_customers/common/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class InfoBanner extends StatelessWidget {

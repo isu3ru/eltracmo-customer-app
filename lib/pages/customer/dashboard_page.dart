@@ -1,11 +1,13 @@
 import 'package:eltracmo_customers/common/app_theme.dart';
-import 'package:eltracmo_customers/pages/auth/login.dart';
+import 'package:eltracmo_customers/pages/appointments/appointments_home_page.dart';
+import 'package:eltracmo_customers/pages/auth/login_page.dart';
 import 'package:eltracmo_customers/pages/common/dialogs.dart';
 import 'package:eltracmo_customers/pages/common/loading_screen.dart';
 import 'package:eltracmo_customers/pages/customer/profile_page.dart';
 import 'package:eltracmo_customers/pages/vehicles/vehicles_home_page.dart';
 import 'package:eltracmo_customers/widgets/grid_button.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -27,12 +29,16 @@ class _DashboardState extends State<Dashboard> {
           'Are you sure you want to log out of the app? You\'ll need to log in again.',
           'Log Out',
           () {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => const LoginPage(),
-              ),
-              (route) => false,
-            );
+            SharedPreferences.getInstance().then((prefs) {
+              prefs.remove('token');
+
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+                (route) => false,
+              );
+            });
           },
         );
       },
@@ -114,7 +120,16 @@ class _DashboardState extends State<Dashboard> {
                           GridButton(
                             image: 'assets/icons/appointment.png',
                             text: 'Appointments',
-                            onTap: () {},
+                            onTap: () {
+                              // go to vehicles home page
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const AppointmentsHome();
+                                  },
+                                ),
+                              );
+                            },
                           ),
                           GridButton(
                             image: 'assets/icons/complain.png',

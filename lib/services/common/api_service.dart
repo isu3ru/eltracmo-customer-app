@@ -4,7 +4,7 @@ import 'package:eltracmo_customers/services/common/routes.dart';
 class ApiService {
   static final Dio dio = Dio();
 
-  static Future<Map<String, dynamic>?> getRequest(String route,
+  static Future<dynamic> getRequest(String route,
       {Map<String, dynamic>? queryParameters,
       Map<String, dynamic>? headers}) async {
     try {
@@ -23,8 +23,8 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>?> postRequest(String route,
-      Map<String, dynamic>? data, Map<String, dynamic>? headers) async {
+  static Future<dynamic> postRequest(String route, Map<String, dynamic>? data,
+      Map<String, dynamic>? headers) async {
     try {
       String url = baseUrl + route;
       final response = await dio.post(
@@ -42,8 +42,8 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>?> putRequest(String route,
-      Map<String, dynamic>? data, Map<String, dynamic>? headers) async {
+  static Future<dynamic> putRequest(String route, Map<String, dynamic>? data,
+      Map<String, dynamic>? headers) async {
     try {
       String url = baseUrl + route;
       final response = await dio.put(
@@ -60,7 +60,7 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>?> deleteRequest(
+  static Future<dynamic> deleteRequest(
       String route, Map<String, dynamic>? headers) async {
     try {
       String url = baseUrl + route;
@@ -78,7 +78,7 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>?> uploadFile(
+  static Future<dynamic> uploadFile(
       String route, FormData formData, Map<String, dynamic>? headers) async {
     // upload form data with file
     try {

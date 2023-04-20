@@ -5,3 +5,4 @@ const loginRoute = '/customer/login';
 const registerRoute = '/customer/register';
 const profileGetRoute = '/customer/profile';
 const profileUpdateRoute = '/customemailemailemailer/profile';
+const allVehiclesRoute = '/customer/vehicles';

@@ -12,17 +12,21 @@ class RoundedCornerTextField extends StatelessWidget {
   final Function? onChanged;
   final String? value;
   final TextInputFormatter? formatter;
+  final bool isNullable;
+  final TextInputAction textInputAction;
 
   const RoundedCornerTextField({
     Key? key,
     required this.name,
-    required this.errorText,
-    required this.textInputType,
-    required this.isObscure,
-    required this.hintText,
+    this.textInputType = TextInputType.text,
+    this.isObscure = false,
+    this.hintText = '',
+    this.errorText = '',
     this.onChanged,
     this.value,
     this.formatter,
+    this.isNullable = false,
+    this.textInputAction = TextInputAction.next,
   }) : super(key: key);
 
   @override
@@ -41,9 +45,11 @@ class RoundedCornerTextField extends StatelessWidget {
           hintStyle: const TextStyle(
             fontSize: 16.0,
           )),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(errorText: errorText),
-      ]),
+      validator: isNullable
+          ? null
+          : FormBuilderValidators.compose([
+              FormBuilderValidators.required(errorText: errorText),
+            ]),
       keyboardType: textInputType,
       obscureText: isObscure,
       onChanged: (value) {
@@ -53,6 +59,7 @@ class RoundedCornerTextField extends StatelessWidget {
       },
       initialValue: value,
       inputFormatters: formatter != null ? [formatter!] : [],
+      textInputAction: textInputAction,
     );
   }
 }
