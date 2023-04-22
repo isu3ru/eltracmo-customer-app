@@ -25,7 +25,7 @@ class VehicleService {
     return data.map<Vehicle>((json) => Vehicle.fromJson(json)).toList();
   }
 
-  static Future<Vehicle> saveVehicle(data) async {
+  static Future<Vehicle?> saveVehicle(data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
@@ -36,6 +36,10 @@ class VehicleService {
       data,
       headers,
     );
+
+    if (response == null) {
+      return null;
+    }
 
     return Vehicle.fromJson(response);
   }

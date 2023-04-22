@@ -39,7 +39,7 @@ class _VehiclesAddPageState extends State<VehiclesAddPage> {
       data['current_mileage'] = int.parse(data['current_mileage']);
 
       // save vehicle details
-      Vehicle vehicle = await VehicleService.saveVehicle(data);
+      Vehicle? vehicle = await VehicleService.saveVehicle(data);
 
       if (!mounted) return;
 
@@ -47,7 +47,7 @@ class _VehiclesAddPageState extends State<VehiclesAddPage> {
         isLoading = false;
       });
 
-      if (vehicle.id == null) {
+      if (vehicle == null || vehicle.id == null) {
         // show error message
         showDialog(
           context: context,
